@@ -12,18 +12,14 @@ import android.net.Uri;
 import android.os.Bundle;
 
 
-import android.os.Handler;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-
-import android.widget.GridView;
 
 import com.redzvika.tikaltest.R;
 import com.redzvika.tikaltest.background.MoviesData;
-
-import java.util.ArrayList;
 
 
 /**
@@ -32,15 +28,32 @@ import java.util.ArrayList;
 public class MainFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Cursor> {
 
 
-    private Cursor cursorData=null;
-    private GridView mGridView;
-    private ArrayList<String> mItems=new ArrayList<String>();
-    private  Handler handler;
-
+    /**
+     * stores activity
+     */
     private Activity activity;
-    private  OnItemSelectedListener onItemSelectedListener;
 
-    private CustomAdapter adapter;
+    /**
+     * stores callback to handle clicks in the Grid/
+     */
+    private OnItemSelectedListener onItemSelectedListener;
+
+    /**
+     *
+     */
+    private MovieAdapter movieAdapter;
+
+    /**
+     *
+     */
+    private RecyclerView recyclerView;
+
+
+    /**
+     *
+     */
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +64,13 @@ public class MainFragment extends Fragment implements  LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getLoaderManager().initLoader(0, null, this);
-
-
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        mGridView = (GridView) v.findViewById(R.id.gridView);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onItemSelectedListener.onItemSelected(adapter.getItem(position));
-            }
-        });
-
-        mGridView.setEmptyView(v.findViewById(R.id.empty));
-
+        recyclerView = (RecyclerView) v.findViewById(R.id.movie_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        movieAdapter=new MovieAdapter(activity,onItemSelectedListener);
+        recyclerView.setAdapter(movieAdapter);
         return v;
     }
 
@@ -75,10 +82,8 @@ public class MainFragment extends Fragment implements  LoaderManager.LoaderCallb
         if (context instanceof OnItemSelectedListener) {
             onItemSelectedListener = (OnItemSelectedListener) context;
         } else {
-            throw new ClassCastException(context.toString()
-                    + " must implemenet MainFragment.OnItemSelectedListener");
+            throw new ClassCastException(context.toString() + " must implemenet MainFragment.OnItemSelectedListener");
         }
-
         activity =(Activity)context;
 
     }
@@ -100,18 +105,18 @@ public class MainFragment extends Fragment implements  LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-        adapter=new CustomAdapter(activity,data);
-        mGridView.setAdapter(adapter);
-
+        movieAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        movieAdapter.swapCursor(null);
     }
 
-
-    public interface OnItemSelectedListener {
+    /**
+     * interface that MainActivity implements to send the MoviesData.Movie to the fragment/Activity .
+     */
+    public  interface OnItemSelectedListener {
         public void onItemSelected( MoviesData.Movie  movie);
     }
 

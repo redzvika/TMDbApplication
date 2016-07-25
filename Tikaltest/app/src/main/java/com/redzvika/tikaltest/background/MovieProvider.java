@@ -24,7 +24,7 @@ public class MovieProvider extends ContentProvider {
 	 public static final Uri CONTENT_URI = Uri.parse(URL);
 	   
 	 // fields for the database
-	 static final String ID = "id";
+	 static final String ID = "_id";
 	 //static final String NAME = "name";
 	 //static final String BIRTHDAY = "birthday";
 	 public static final String POSTER_PATH ="poster_path";
@@ -60,7 +60,7 @@ public class MovieProvider extends ContentProvider {
 	   static final int DATABASE_VERSION = 1;
 	   static final String CREATE_TABLE = 
 	      " CREATE TABLE " + TABLE_NAME +
-	      " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+	      " ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		  MOVIE_ID + " TEXT NOT NULL, "+
 		  ORIGINAL_TITLE + " TEXT NOT NULL, "+
 		  OVERVIEW + " TEXT NOT NULL, "+

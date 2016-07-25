@@ -48,7 +48,7 @@ public class GetBasicDataIntentService extends IntentService{
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context,"AllIsWell",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"All Is Well !!",Toast.LENGTH_SHORT).show();
                     }
                 });
             }catch (Exception e){
