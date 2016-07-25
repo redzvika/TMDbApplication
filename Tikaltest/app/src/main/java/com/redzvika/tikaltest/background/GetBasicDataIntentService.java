@@ -105,34 +105,6 @@ public class GetBasicDataIntentService extends IntentService{
         return value;
     }
 
-    public void traversDataBase() {
-        // Show all the birthdays sorted by friend's name
-        String URL = "content://com.redzvika.provider.MovieProv/movies";
-        Uri movies = Uri.parse(URL);
-        Cursor c = getContentResolver().query(movies, null, null,null, "original_title");
 
-        Log.d(TAG,"database size" +c.getCount());
-        if (!c.moveToFirst()) {
-            Log.d(TAG," no content yet!");
-        }else{
-            do{
-                StringBuilder builder=new StringBuilder();
-                builder.append("ID ").append(c.getString(c.getColumnIndex(MovieProvider.ID))).append("\r\n");
-                builder.append("MOVIE_ID ").append(c.getString(c.getColumnIndex(MovieProvider.MOVIE_ID))).append("\r\n");
-                builder.append("ORIGINAL_TITLE ").append(c.getString(c.getColumnIndex(MovieProvider.ORIGINAL_TITLE))).append("\r\n");
-                builder.append("OVERVIEW ").append(c.getString(c.getColumnIndex(MovieProvider.OVERVIEW))).append("\r\n");
-                builder.append("RELEASE_DATE ").append(c.getString(c.getColumnIndex(MovieProvider.RELEASE_DATE))).append("\r\n");
-                builder.append("VOTE_AVERAGE ").append(c.getString(c.getColumnIndex(MovieProvider.VOTE_AVERAGE))).append("\r\n");
-                builder.append("POSTER_PATH ").append(c.getString(c.getColumnIndex(MovieProvider.POSTER_PATH))).append("\r\n");
-                builder.append("BACKDROP_PATH ").append(c.getString(c.getColumnIndex(MovieProvider.BACKDROP_PATH))).append("\r\n");
-                String output=builder.toString();
-                Log.d(TAG,"Data" +output);
-            } while (c.moveToNext());
-            if (!c.isClosed()){
-                c.close();
-            }
-        }
-
-    }
 
 }

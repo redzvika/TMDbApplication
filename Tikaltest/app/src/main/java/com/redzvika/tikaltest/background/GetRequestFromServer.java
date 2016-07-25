@@ -14,21 +14,15 @@ import javax.net.ssl.HttpsURLConnection;
 public class GetRequestFromServer extends  BaseCommunication {
 
 
-    //eturn config['api']['base.url']+self.poster_sizes(img_size)+img_path
 
     private static String TAG="GetRequestFromServer";
     private HttpURLConnection httpConn;
 
-    //26ec0c794803b24ca20910bef3e45993
+
     private String CONFIG_PATTERN = "https://api.themoviedb.org/3/configuration?api_key=%s";
     private String IMG_PATTERN = "https://api.themoviedb.org/3/movie/%s/images?api_key=%s";
-
-    //https://api.themoviedb.org/3/movie/209112/images?api_key=26ec0c794803b24ca20910bef3e45993
-    //"http://api.themoviedb.org/3/discover/movie?api_key=26ec0c794803b24ca20910bef3e45993&sort_by=popularity.desc";
     private String DISCOVER_PATTERN = "https://api.themoviedb.org/3/discover/movie?api_key=%s&sort_by=popularity.desc";
 
-   // "/cGOPbv9wA5gEejkUN892JrveARt.jpg"
-    //"http://image.tmdb.org/t/p/w500/o4I5sHdjzs29hBWzHtS2MKD3JsM.jpg"
     public GetRequestFromServer(String key){
         super(key);
     }

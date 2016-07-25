@@ -108,8 +108,6 @@ public class MainFragment extends Fragment implements  LoaderManager.LoaderCallb
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        String x;
-
     }
 
 
